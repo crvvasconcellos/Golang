@@ -1,0 +1,5 @@
+- Gerar cartelas
+- Estrutura de dados da cartela
+- Sorteio
+- Armazenar números já sorteados
+- Imprime a cartela com valores sorteados
