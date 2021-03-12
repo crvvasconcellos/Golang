@@ -1,12 +1,13 @@
-package inteiros
+package inteiros_test
 
 import (
 	"fmt"
+	"inteiros"
 	"testing"
 )
 
 func TestAdicionador(t *testing.T) {
-	got := Adiciona(2, 2)
+	got := inteiros.Adiciona(2, 2)
 	want := 4
 
 	if got != want {
@@ -15,7 +16,7 @@ func TestAdicionador(t *testing.T) {
 }
 
 func ExampleAdiciona() {
-	soma := Adiciona(2, 5)
+	soma := inteiros.Adiciona(2, 5)
 	fmt.Println(soma)
 	// Output: 7
 }

@@ -1,4 +1,4 @@
-package main
+package arrays
 
 func Soma(numbers []int) int {
 	sum := 0
@@ -8,14 +8,24 @@ func Soma(numbers []int) int {
 	return sum
 }
 
-func SomaTudo(numbers, numbers2 []int) []int {
-	sum := 0
-	sum2 := 0
-	for _, number := range numbers {
-		sum += number
+func SomaTudo(numeroParaSomar ...[]int) []int {
+	var somas []int
+	for _, numeros := range numeroParaSomar {
+		somas = append(somas, Soma(numeros))
 	}
-	for _, number2 := range numbers2 {
-		sum2 += number2
+
+	return somas
+}
+
+func SomaTodoOResto(numeroParaSomar ...[]int) []int {
+	var somas []int
+	for _, numeros := range numeroParaSomar {
+		if len(numeros) == 0 {
+			somas = append(somas, 0)
+			continue
+		}
+		somas = append(somas, Soma(numeros[1:]))
+
 	}
-	return []int{sum, sum2}
+	return somas
 }
