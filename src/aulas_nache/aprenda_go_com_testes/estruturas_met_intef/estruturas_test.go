@@ -1,14 +1,13 @@
-package estruturas_test
+package estruturas
 
 import (
-	"estruturas"
 	"testing"
 )
 
 func TestPerimetro(t *testing.T) {
-	retangulo := estruturas.Retangulo{10.0, 10.0}
+	retangulo := Retangulo{10.0, 10.0}
 	want := 40.0
-	got := estruturas.Perimetro(retangulo)
+	got := Perimetro(retangulo)
 
 	if want != got {
 		t.Errorf("want %.2f got %.2f", want, got)
@@ -16,9 +15,9 @@ func TestPerimetro(t *testing.T) {
 }
 
 func TestArea(t *testing.T) {
-	retangulo := estruturas.Retangulo{12.0, 6.0}
+	retangulo := Retangulo{12.0, 6.0}
 	want := 72.0
-	got := estruturas.Area(retangulo)
+	got := Area(retangulo)
 
 	if want != got {
 		t.Errorf("want %.2f got %.2f", want, got)
@@ -26,9 +25,9 @@ func TestArea(t *testing.T) {
 }
 
 func TestCircle(t *testing.T) {
-	circle := estruturas.Circle{10.0}
+	circle := Circle{10.0}
 	want := 314.159265
-	got := estruturas.AreaCircle(circle)
+	got := AreaCircle(circle)
 
 	if want != got {
 		t.Errorf("want %.2f got %.2f", want, got)
@@ -38,7 +37,7 @@ func TestCircle(t *testing.T) {
 func TestAreaNovo(t *testing.T) {
 
 	t.Run("retângulos", func(t *testing.T) {
-		retangulo := estruturas.Retangulo{12.0, 6.0}
+		retangulo := Retangulo{12.0, 6.0}
 		want := 72.0
 		got := retangulo.Area()
 
@@ -48,7 +47,7 @@ func TestAreaNovo(t *testing.T) {
 	})
 
 	t.Run("círculos", func(t *testing.T) {
-		circulo := estruturas.Circle{10.0}
+		circulo := Circle{10.0}
 		want := 314.159265
 		got := circulo.Area()
 
@@ -60,7 +59,7 @@ func TestAreaNovo(t *testing.T) {
 
 func TestAreaNovo2(t *testing.T) {
 
-	verificaArea := func(t *testing.T, forma estruturas.Forma, want float64) {
+	verificaArea := func(t *testing.T, forma Forma, want float64) {
 		t.Helper()
 		got := forma.Area()
 
@@ -71,14 +70,14 @@ func TestAreaNovo2(t *testing.T) {
 
 	t.Run("retângulos", func(t *testing.T) {
 
-		retangulo := estruturas.Retangulo{12.0, 6.0}
+		retangulo := Retangulo{12.0, 6.0}
 		verificaArea(t, retangulo, 72.0)
 
 	})
 
 	t.Run("círculos", func(t *testing.T) {
 
-		circulo := estruturas.Circle{10}
+		circulo := Circle{10}
 		verificaArea(t, circulo, 314.159265)
 
 	})
@@ -86,11 +85,11 @@ func TestAreaNovo2(t *testing.T) {
 
 func TestAreaNovo3(t *testing.T) {
 	testesArea := []struct {
-		forma estruturas.Forma
+		forma Forma
 		want  float64
 	}{
-		{estruturas.Retangulo{12, 6}, 72.0},
-		{estruturas.Circle{10}, 314.159265},
+		{Retangulo{12, 6}, 72.0},
+		{Circle{10}, 314.159265},
 	}
 
 	for _, tt := range testesArea {
@@ -103,12 +102,12 @@ func TestAreaNovo3(t *testing.T) {
 
 func TestAreaNovo4(t *testing.T) {
 	testesArea := []struct {
-		forma estruturas.Forma
+		forma Forma
 		want  float64
 	}{
-		{estruturas.Retangulo{12, 6}, 72.0},
-		{estruturas.Circle{10}, 314.159265},
-		{estruturas.Triangulo{12, 6}, 36.0},
+		{Retangulo{12, 6}, 72.0},
+		{Circle{10}, 314.159265},
+		{Triangulo{12, 6}, 36.0},
 	}
 
 	for _, tt := range testesArea {
@@ -121,12 +120,12 @@ func TestAreaNovo4(t *testing.T) {
 
 func TestAreaNovo5(t *testing.T) {
 	testesArea := []struct {
-		forma estruturas.Forma
+		forma Forma
 		want  float64
 	}{
-		{forma: estruturas.Retangulo{Largura: 12, Altura: 6}, want: 72.0},
-		{forma: estruturas.Circle{Raio: 10}, want: 314.159265},
-		{forma: estruturas.Triangulo{Base: 12, Altura: 6}, want: 36.0},
+		{forma: Retangulo{Largura: 12, Altura: 6}, want: 72.0},
+		{forma: Circle{Raio: 10}, want: 314.159265},
+		{forma: Triangulo{Base: 12, Altura: 6}, want: 36.0},
 	}
 
 	for _, tt := range testesArea {
@@ -140,12 +139,12 @@ func TestAreaNovo5(t *testing.T) {
 func TestAreaNovo6(t *testing.T) {
 	testesArea := []struct {
 		nome    string
-		forma   estruturas.Forma
+		forma   Forma
 		temArea float64
 	}{
-		{nome: "Retângulo", forma: estruturas.Retangulo{Largura: 12, Altura: 6}, temArea: 72.0},
-		{nome: "Círculo", forma: estruturas.Circle{Raio: 10}, temArea: 314.159265},
-		{nome: "Triângulo", forma: estruturas.Triangulo{Base: 12, Altura: 6}, temArea: 36.0},
+		{nome: "Retângulo", forma: Retangulo{Largura: 12, Altura: 6}, temArea: 72.0},
+		{nome: "Círculo", forma: Circle{Raio: 10}, temArea: 314.159265},
+		{nome: "Triângulo", forma: Triangulo{Base: 12, Altura: 6}, temArea: 36.0},
 	}
 
 	for _, tt := range testesArea {
