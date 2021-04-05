@@ -2,6 +2,7 @@ package calculator_test
 
 import (
 	"calculator"
+	"math/rand"
 	"testing"
 )
 
@@ -53,6 +54,12 @@ func TestSubstract(t *testing.T) {
 			a:    2,
 			b:    16,
 		},
+		{
+			desc: "subtracao 0.15 - (-1) = 1.15",
+			want: 1.15,
+			a:    0.15,
+			b:    -1,
+		},
 	}
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
@@ -75,6 +82,12 @@ func TestMultiply(t *testing.T) {
 			want: 0.375,
 			a:    -0.5,
 			b:    -0.75,
+		},
+		{
+			desc: "multiplicacao 900 * 1500 = 1350000",
+			want: 1350000,
+			a:    900,
+			b:    1500,
 		},
 	}
 	for _, tC := range testCases {
@@ -99,23 +112,32 @@ func TestDivide(t *testing.T) {
 			a:    -0.5,
 			b:    -2,
 		},
+		{
+			desc: "divisao por 0",
+			want: 0,
+			a:    100,
+			b:    0,
+		},
 	}
 	for _, tC := range testCases {
 
 		t.Run(tC.desc, func(t *testing.T) {
-			got, _ := calculator.Divide(tC.a, tC.b)
+			got, err := calculator.Divide(tC.a, tC.b)
+
+			if tC.b == 0 {
+				if err != calculator.ErrExpected {
+					t.Fatalf("Esperava-se um erro %v, mas recebeu o %v", calculator.ErrExpected, err)
+				}
+			}
+
+			if tC.b != 0 {
+				if err != nil {
+					t.Fatalf("Não era esperado um erro %v, porém ele ocorreu!", err)
+				}
+			}
 
 			if tC.want != got {
 				t.Errorf("want %f, got %f", tC.want, got)
-			}
-
-		})
-
-		t.Run("Divisão por 0", func(t *testing.T) {
-			_, err := calculator.Divide(tC.a, tC.b)
-
-			if err != nil && err == calculator.ErrExpected {
-				t.Fatal(calculator.ErrExpected)
 			}
 
 		})
@@ -130,14 +152,26 @@ func TestSqrt(t *testing.T) {
 		want, a float64
 	}{
 		{"raiz quadrada 7 = 49", 7, 49},
-		//{"Raiz negativa - Erro", 0, -49},
+		{"Raiz negativa - Erro", 0, -49},
 		{"Raiz quadrada 0 = 0", 0, 0},
 		{"Raiz quadrada 144 = 12", 12, 144},
 	}
 	for _, tC := range testCases {
 
 		t.Run(tC.desc, func(t *testing.T) {
-			got, _ := calculator.Sqrt(tC.a)
+			got, err := calculator.Sqrt(tC.a)
+
+			if tC.a < 0 {
+				if err != calculator.ErrExpected1 {
+					t.Fatalf("Esperava-se um erro %v, mas recebeu o %v", calculator.ErrExpected1, err)
+				}
+			}
+
+			if tC.a >= 0 {
+				if err != nil {
+					t.Fatalf("Não era esperado um erro %v, porém ele ocorreu!", err)
+				}
+			}
 
 			if tC.want != got {
 				t.Errorf("want %f, got %f", tC.want, got)
@@ -145,15 +179,19 @@ func TestSqrt(t *testing.T) {
 
 		})
 
-		t.Run("Raíz negativa", func(t *testing.T) {
-			_, err := calculator.Sqrt(tC.a)
-
-			if err != nil && err == calculator.ErrExpected1 {
-				t.Fatal(calculator.ErrExpected1)
-			}
-
-		})
-
 	}
 
+}
+
+func TestAddRandom(t *testing.T) {
+	t.Parallel()
+	for i := 0; i < 100; i++ {
+		a := rand.NormFloat64()
+		b := rand.NormFloat64()
+		var want float64 = a + b
+		got := calculator.Add(a, b)
+		if want != got {
+			t.Errorf("want %f, got %f", want, got)
+		}
+	}
 }
