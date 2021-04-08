@@ -1,8 +1,8 @@
 package calculator_test
 
 import (
-	"calculator"
 	"math/rand"
+	"modulo/calculator"
 	"testing"
 )
 
